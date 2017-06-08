@@ -28,6 +28,7 @@ java.net.URL url2 = GestionProduit.class.getResource("/sons/721.wav");
         son2 = java.applet.Applet.newAudioClip(url2);
         jb_son1.setVisible(false);
         jb_son2.setVisible(false);
+       
     }
 
     /**
@@ -190,7 +191,6 @@ java.net.URL url2 = GestionProduit.class.getResource("/sons/721.wav");
                 return canEdit [columnIndex];
             }
         });
-        jtable_produit.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jtable_produit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtable_produitMouseClicked(evt);
@@ -276,10 +276,23 @@ if(jt_prix.getText().equals("")) prix=0.f;
 else
  prix=Float.parseFloat(jt_prix.getText());
 
+boolean presence=false;
+
+int row=modele.getRowCount();
+
+int i=0;
+while ((i<row) && !(presence))
+{
+    if (modele.getValueAt(i, 0).equals(lib)&&(modele.getValueAt(i, 1).equals(cate)) &&(modele.getValueAt(i, 2).equals(prix))) presence=true;
+    i++;
+}
+
+
 if (lib.equals(""))
 {
     jl_warning.setText(jl_libellé.getText().trim() +" non specifié");
 }
+else if (presence) jl_warning.setText("Produit deja éxistant");
 else
 {
 os[0]=lib;
